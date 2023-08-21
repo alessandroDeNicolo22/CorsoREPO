@@ -1,6 +1,7 @@
 package com.progettoCorso.data.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -16,4 +17,5 @@ public interface StudenteService {
 	public void deleteStudente (Integer id);
 	public Boolean checkElimina(Integer id);
 	public Page<StudenteResponse>getPage(int pageIndex, int pageSize);
+	public List<StudenteResponse> getStudentiByID();
 }

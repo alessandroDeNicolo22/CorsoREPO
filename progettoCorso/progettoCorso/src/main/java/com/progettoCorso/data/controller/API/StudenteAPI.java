@@ -1,6 +1,7 @@
 package com.progettoCorso.data.controller.API;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,4 +40,7 @@ public interface StudenteAPI {
 	
 	@GetMapping(path = "/listpage", produces = "application/json")
 	public Page<StudenteResponse> getPage(HttpServletRequest request, @RequestParam(defaultValue = "0") int pageIndex, @RequestParam(defaultValue = "3") int pageSize);
+	
+	@GetMapping(path="/listaid", produces = "application/json")
+	public ResponseEntity<List<StudenteResponse>> getStudentiByID(HttpServletRequest request);
 }

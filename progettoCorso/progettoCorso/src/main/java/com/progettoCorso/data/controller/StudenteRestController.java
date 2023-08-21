@@ -1,6 +1,7 @@
 package com.progettoCorso.data.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,6 +51,11 @@ public class StudenteRestController implements StudenteAPI{
 	@Override
 	public Page<StudenteResponse> getPage(HttpServletRequest request, int pageIndex, int pageSize) {
 		return service.getPage(pageIndex, pageSize);
+	}
+
+	@Override
+	public ResponseEntity<List<StudenteResponse>> getStudentiByID(HttpServletRequest request) {
+		return ResponseEntity.ok(service.getStudentiByID());
 	}
 
 }

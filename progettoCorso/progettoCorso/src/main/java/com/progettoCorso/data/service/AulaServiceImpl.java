@@ -1,8 +1,10 @@
 package com.progettoCorso.data.service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +15,18 @@ import org.springframework.stereotype.Service;
 import com.progettoCorso.data.dto.Request.AulaRequest;
 import com.progettoCorso.data.dto.Response.AulaResponse;
 import com.progettoCorso.data.entity.Aula;
+import com.progettoCorso.data.entity.Corso;
 import com.progettoCorso.data.repository.AulaRepository;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.progettoCorso.data.entity.QCorso;
 @Service
 @Transactional
 public class AulaServiceImpl implements AulaService{
 
 	@Autowired
 	AulaRepository repo;
+	@Autowired
+	EntityManager entitymanager;
 
 	@Override
 	public ArrayList<AulaResponse> getAllAule() {
@@ -48,8 +55,12 @@ public class AulaServiceImpl implements AulaService{
 
 	@Override
 	public Boolean checkAula(Integer id) {
-		System.out.println(repo.nAule(id));
-		if(repo.nAule(id)==0) {
+		QCorso corso = QCorso.corso1;
+		JPAQueryFactory queryFactory = new JPAQueryFactory(entitymanager);
+		long numCorsi = queryFactory.selectFrom(corso).where(corso.oAula.id.eq(id)).fetchCount();
+//		ho utilizzato fetchCount() per ottenere il numero di corsi associati all'aula e restituito direttamente il risultato della condizione numCorsi == 0 come valore booleano.
+		System.out.println(numCorsi);
+		if(numCorsi==0) {
 			return true;
 		}else {
 			return false;
